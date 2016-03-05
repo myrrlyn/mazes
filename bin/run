@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "mazes"
+
+dims = Hash.new
+dims[:x] = ARGV[1].nil? ? 4 : ARGV[1].to_i
+dims[:y] = ARGV[2].nil? ? 4 : ARGV[2].to_i
+
+case ARGV[0]
+when "bt" then Mazes::Cartesian.demo_basic \
+	dims: dims, algo: Mazes::Cartesian::BinaryTree
+else puts dims
+end

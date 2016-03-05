@@ -65,7 +65,7 @@ module Mazes::Cartesian
 #
 # Yields a Cell to an implicit block.
 		def each_cell
-			each_col.each do |col|
+			each_col do |col|
 				col.each do |cell|
 					yield cell if cell
 				end

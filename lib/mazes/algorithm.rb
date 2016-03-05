@@ -8,10 +8,12 @@ module Mazes
 #
 # space - A Space of Cells over which to execute.
 #
-# As the Space is modified in-place, this needs not return anything.
+# The Space is modified in-place, and so the return value need not be captured
+# in order to proceed.
 #
+# Returns the modified Space.
 # Raises a NotImplemented exception.
-		def act_on space:
+		def self.act_on space:
 			raise NotImplemented "#{self.class} has not implemented an action"
 		end
 
