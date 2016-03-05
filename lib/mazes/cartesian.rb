@@ -14,6 +14,7 @@ module Mazes::Cartesian
 		s = Space.new x: dims[:x], y: dims[:y]
 		algo.act_on space: s, dir_v: :down, dir_h: :left
 		puts s
+		s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
 	end
 
 end

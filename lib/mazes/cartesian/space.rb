@@ -123,5 +123,37 @@ module Mazes::Cartesian
 			ret
 		end
 
+# Public: Represent the Space as an image in 2-Dimensional Cartesian geometry.
+#
+# This is very simple, as paper and computer screens are ALSO 2-D Cartesian.
+#
+# cell_size - An Integer dictating the size of a Cell in pixels.
+#   Defaults to 10.
+#
+# Returns a PNG representation of the Space.
+		def to_png cell_size: 10
+			img_w = cell_size * @x
+			img_h = cell_size * @y
+			img_bg = ChunkyPNG::Color::TRANSPARENT
+			img_fg = ChunkyPNG::Color::BLACK
+			img = ChunkyPNG::Image.new img_w + 1, img_h + 1, img_bg
+
+# Cells are responsible for drawing their right and bottom walls at all times,
+# and for drawing their top and left walls only if there are not Cells there to
+# draw them instead.
+			each_cell do |cell|
+				x0, y0 = cell.x * cell_size, cell.y * cell_size
+				x1, y1 = (cell.x + 1) * cell_size, (cell.y + 1) * cell_size
+
+				img.line(x0, y0, x1, y0, img_fg) unless cell.up
+				img.line(x0, y0, x0, y1, img_fg) unless cell.left
+
+				img.line(x1, y0, x1, y1, img_fg) unless cell.linked? cell: cell.right
+				img.line(x0, y1, x1, y1, img_fg) unless cell.linked? cell: cell.down
+			end
+
+			img
+		end
+
 	end
 end

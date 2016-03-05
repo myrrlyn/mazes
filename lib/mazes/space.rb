@@ -1,3 +1,5 @@
+require "chunky_png"
+
 module Mazes
 # Internal: Standard interface for an arrangement of Cells in geometrical space.
 # The Space is the object which gives Cells local context and on which
@@ -55,8 +57,17 @@ module Mazes
 # Internal: Represent the Space as text according to local geometric rules.
 #
 # Returns a String representation of the Space.
+# Raises a not-implemented exception.
 		def to_s
 			raise "#{self.class} has not implemented a text representation"
+		end
+
+# Internal: Represent the Space as an image according to local geometric rules.
+#
+# Return a PNG representation of the Space.
+# Raises a not-implemented exception.
+		def to_png
+			raise "#{self.class} has not implemented an image representation"
 		end
 
 	end
