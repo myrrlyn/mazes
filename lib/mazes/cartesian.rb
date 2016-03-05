@@ -2,6 +2,7 @@ module Mazes::Cartesian
 	self.autoload :Cell, "mazes/cartesian/cell"
 	self.autoload :Space, "mazes/cartesian/space"
 	self.autoload :BinaryTree, "mazes/cartesian/binary_tree"
+	self.autoload :Sidewinder, "mazes/cartesian/sidewinder"
 
 # Public: Demonstrate execution of an Algorithm on a Space.
 #
@@ -11,7 +12,8 @@ module Mazes::Cartesian
 # Prints the Space to a string, and returns it.
 	def self.demo_basic dims:, algo:
 		s = Space.new x: dims[:x], y: dims[:y]
-		algo.act_on space: s
+		algo.act_on space: s, dir_v: :down, dir_h: :left
+		puts s
 	end
 
 end

@@ -6,9 +6,9 @@ module Mazes::Cartesian
 #
 # space - A Mazes::Cartesian::Space of Mazes::Cartesian::Cells.
 # dir_h - A Symbol label for a horizontal adjacency method on Cells.
-#   Defaults to :right
+#   Defaults to :right.
 # dir_v - A Symbol label for a vertical adjacency method on Cells.
-#   Defaults to :up
+#   Defaults to :up.
 #
 # Returns the modified Space.
 		def self.act_on space:, dir_h: :right, dir_v: :up

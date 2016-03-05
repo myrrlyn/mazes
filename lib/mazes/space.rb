@@ -52,5 +52,12 @@ module Mazes
 			raise "#{self.class} has not implemented a cell initializer"
 		end
 
+# Internal: Represent the Space as text according to local geometric rules.
+#
+# Returns a String representation of the Space.
+		def to_s
+			raise "#{self.class} has not implemented a text representation"
+		end
+
 	end
 end

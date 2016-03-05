@@ -92,5 +92,36 @@ module Mazes::Cartesian
 			end
 		end
 
+# Public: Represent the Space as text in 2-Dimensional Cartesian geometry.
+#
+# This is very simple, as paper and computer screens are ALSO 2-D Cartesian.
+#
+# Returns a String representation of the Space.
+		def to_s
+			# Instead of doing annoying math to swap the last junction for a corner,
+			# just backspace and print a corner.
+			ret =  "\u2554#{("\u2550" * 3 + "\u2566") * @x}\C-h\u2557\n"
+			s_width = 4 * (@x + 1)
+
+			each_row do |row|
+				mid = "\u2551"
+				bot = "\u2560"
+				row.each do |cell|
+					cell ||= Cell.new x: -1, y: -1
+					body = " " * 3
+					bound_r = (cell.linked?(cell: cell.right) ? " " : "\u2551")
+					bound_d = (cell.linked?(cell: cell.down)  ? " " : "\u2550") * 3
+					mid << body << bound_r
+					bot << bound_d << "\u256C"
+				end
+				ret << mid << "\n"
+				ret << bot << "\C-h\u2563\n"
+			end
+			ret = ret[0, ret.length - s_width]
+			ret << "\u255A#{("\u2550" * 3 + "\u2569") * @x}\u0008\u255D\n"
+
+			ret
+		end
+
 	end
 end
