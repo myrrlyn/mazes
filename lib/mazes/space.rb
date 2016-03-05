@@ -13,8 +13,29 @@ module Mazes
 		def initialize dims:
 			@dims = dims
 			@space = init_space
-			init_cell
+			init_cells
 			raise "#{self.class} has not implemented a constructor"
+		end
+
+# Internal: Access a Cell from inside the Space.
+#
+# dim - An n-dimensional Integer Array of coordinates at which to retreive a
+#   Cell.
+#
+# Raises a not-implemented exception.
+		def [] dim
+		end
+
+# Internal: Get a Cell at random.
+#
+# Raises a not-implemented exception.
+		def sample
+			raise "#{self.class} has not implemented a random sampler"
+		end
+
+# Internal: Iterate across all the Cells in a Space
+		def each_cell
+			raise "#{self.class} has not implemented a cell iterator"
 		end
 
 # Internal: Allocates memory to fit the Space's dimensions.
@@ -27,7 +48,7 @@ module Mazes
 # Internal: Initializes the Cells according to local geometric rules.
 #
 # Raises a not-implemented exception.
-		def init_cell
+		def init_cells
 			raise "#{self.class} has not implemented a cell initializer"
 		end
 
