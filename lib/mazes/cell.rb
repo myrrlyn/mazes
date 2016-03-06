@@ -79,5 +79,31 @@ module Mazes
 			raise "#{self.class} has not implemented adjacency logic"
 		end
 
+# Public: Map out the distances to all Cells in reach from a given Cell.
+#
+# This method, while defined by local geometry, uses link-tracing to perform.
+# Therefore, it can be implemented generally in a geometry-agnostic way.
+#
+# Returns a Distances object mapping the routes from the current Cell to all
+# those it can reach.
+		def distances
+			dist = Distances.new root: self
+			frontier = [ self ]
+
+			while frontier.any?
+				new_frontier = []
+				frontier.each do |cell|
+					cell.links.each do |linked|
+						next if dist[linked]
+						dist[linked] = dist[cell] + 1
+						new_frontier << linked
+					end
+				end
+				frontier = new_frontier
+			end
+
+			dist
+		end
+
 	end
 end

@@ -1,6 +1,7 @@
 module Mazes::Cartesian
 # Public: A region of 2-Dimensional Cartesian space.
 	class Space < Mazes::Space
+
 # Public: Set up getters for the Space's dimensions.
 		attr_reader :dims, :x, :y
 
@@ -108,7 +109,7 @@ module Mazes::Cartesian
 				bot = "\u2560"
 				row.each do |cell|
 					cell ||= Cell.new x: -1, y: -1
-					body = " " * 3
+					body = " #{contents_of cell: cell} "
 					bound_r = (cell.linked?(cell: cell.right) ? " " : "\u2551")
 					bound_d = (cell.linked?(cell: cell.down)  ? " " : "\u2550") * 3
 					mid << body << bound_r

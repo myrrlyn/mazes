@@ -35,6 +35,8 @@ module Mazes
 			raise "#{self.class} has not implemented a random sampler"
 		end
 
+		include DistanceMap
+
 # Internal: Iterate across all the Cells in a Space
 		def each_cell
 			raise "#{self.class} has not implemented a cell iterator"

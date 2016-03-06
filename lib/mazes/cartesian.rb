@@ -17,4 +17,16 @@ module Mazes::Cartesian
 		s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
 	end
 
+# Public: Demonstrate execution of an Algorithm on a Space, and add a Distance
+# map. Same API as above.
+	def self.demo_dist dims:, algo:
+		s = Space.new x: dims[:x], y: dims[:y]
+		algo.act_on space: s, dir_v: :up, dir_h: :left
+		start = s[x: dims[:x] / 2, y: dims[:y] / 2]
+		dists = start.distances
+		s.distances = dists
+		puts s
+		s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
+	end
+
 end
