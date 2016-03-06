@@ -4,8 +4,8 @@ require "bundler/setup"
 require "mazes"
 
 dims = Hash.new
-dims[:x] = ARGV[1].nil? ? 4 : ARGV[1].to_i
-dims[:y] = ARGV[2].nil? ? 4 : ARGV[2].to_i
+dims[0] = ARGV[1].nil? ? 4 : ARGV[1].to_i
+dims[1] = ARGV[2].nil? ? 4 : ARGV[2].to_i
 
 case ARGV[0]
 when "bt" then Mazes::Cartesian.demo_basic \
@@ -28,5 +28,25 @@ when "swm" then Mazes::Cartesian.demo_max \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "swc" then Mazes::Cartesian.demo_color \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
+when "ab" then Mazes::Algorithms.demo_basic \
+	dims: dims, algo: Mazes::Algorithms::AldousBroder
+when "abd" then Mazes::Algorithms.demo_dist \
+	dims: dims, algo: Mazes::Algorithms::AldousBroder
+when "abt" then Mazes::Algorithms.demo_trace \
+	dims: dims, algo: Mazes::Algorithms::AldousBroder
+when "abm" then Mazes::Algorithms.demo_max \
+	dims: dims, algo: Mazes::Algorithms::AldousBroder
+when "abc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Algorithms::AldousBroder
+when "w" then Mazes::Algorithms.demo_basic \
+	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "wd" then Mazes::Algorithms.demo_dist \
+	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "wt" then Mazes::Algorithms.demo_trace \
+	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "wm" then Mazes::Algorithms.demo_max \
+	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "wc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Algorithms::Wilsons
 else puts dims
 end

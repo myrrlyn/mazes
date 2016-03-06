@@ -4,11 +4,13 @@ module Mazes::Cartesian
 
 # Public: Execute the Binary Tree algorithm on a 2-Dimensional Cartesian Space.
 #
-# space - A Mazes::Cartesian::Space of Mazes::Cartesian::Cells.
 # dir_h - A Symbol label for a horizontal adjacency method on Cells.
 #   Defaults to :right.
 # dir_v - A Symbol label for a vertical adjacency method on Cells.
 #   Defaults to :up.
+#
+# The directional parameters dictate the sides on which the two fully empty runs
+# are placed.
 #
 # Returns the modified Space.
 		def self.act_on space:, dir_h: :right, dir_v: :up

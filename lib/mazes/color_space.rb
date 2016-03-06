@@ -20,7 +20,7 @@ module Mazes
 # algo - A Symbol referencing a specific coloring algorithm to use. Defaults to
 #   :rotate_hue
 #
-# Returns a ChunkyPNG::Color
+# Returns a ChunkyPNG::Color or nil
 		def bg_color_for cell:, algo: :rotate_hue
 			self.send(algo, cell: cell)
 		end
@@ -32,9 +32,11 @@ module Mazes
 # scalar - A Number that determines how many cycles of the color wheel are in
 #   the longest path of the Space. Defaults to 1.25
 #
-# Returns a ChunkyPNG::Color
+# Returns a ChunkyPNG::Color or nil
+require "pry"
 		def rotate_hue cell:, scalar: 1.25
-			distance = @distances[cell] or return nil
+			return nil if @distances.nil? or @distances[cell].nil?
+			distance = @distances[cell]
 			hue = (360 * distance * scalar / @maximum).round % 360
 			sat = 1.0
 			lum = 0.5

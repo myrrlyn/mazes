@@ -35,6 +35,13 @@ module Mazes::Cartesian
 			self[x: x, y: y]
 		end
 
+# Public: Get the size of the Space.
+#
+# Returns an Integer count of the Cells composing the Space.
+		def size
+			@x * @y
+		end
+
 # Public: Access the Space by successive columns.
 #
 # Yields an Array of Cells to an implicit block.

@@ -37,6 +37,13 @@ module Mazes
 			raise "#{self.class} has not implemented a random sampler"
 		end
 
+# Internal: Get the size of the Space.
+#
+# Raises a not-implemented exception.
+		def size
+			raise "#{self.class} has not implemented a size reader"
+		end
+
 # Internal: Iterate across all the Cells in a Space
 		def each_cell
 			raise "#{self.class} has not implemented a cell iterator"

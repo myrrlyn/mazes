@@ -4,7 +4,6 @@ module Mazes::Cartesian
 
 # Public: Execute the Sidewinder algoirthm on a 2-Dimensional Cartesian Space.
 #
-# space - A Mazes::Cartesian::Space of Mazes::Cartesian::Cells.
 # dir_h - A Symbol label for a horizontal adjacency method on Cells.
 #   Defaults to :right.
 # dir_v - A Symbol label for a vertical adjacency method on Cells.
