@@ -48,5 +48,7 @@ when "wm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
 when "wc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "abwc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
 else puts dims
 end

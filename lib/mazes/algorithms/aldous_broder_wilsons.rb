@@ -1,18 +1,26 @@
 module Mazes::Algorithms
-# Public: Wilsons generation algorithm. This algorithm works slowly on startup
-# but accelerates as it proceeds.
-	class Wilsons < Mazes::Algorithm
-		require "pry"
+# Public: Uses Aldous-Broder to start (where it is fastest) and then Wilsons to
+# finish (where it is fastest).
+	class AldousBroderWilsons
 
-# Public: Executes the Wilsons algorithm on a Space.
+# Public: Execute the Aldous-Broder/Wilsons hybrid algorithm.
 		def self.act_on space:
 			unvisited = []
 			space.each_cell do |cell|
 				unvisited << cell
 			end
+			cell = unvisited.sample
+			unvisited.delete cell
 
-			first = unvisited.sample
-			unvisited.delete first
+			while unvisited.length > space.size / 2
+				neighbor = cell.neighbors.sample
+				if neighbor.links.empty?
+					cell.link cell: neighbor
+					unvisited.delete neighbor
+				end
+
+				cell = neighbor
+			end
 
 			while unvisited.any?
 				cell = unvisited.sample
@@ -34,6 +42,7 @@ module Mazes::Algorithms
 			end
 
 			space
+
 		end
 
 	end
