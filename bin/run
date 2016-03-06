@@ -48,7 +48,25 @@ when "wm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
 when "wc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "abw" then Mazes::Algorithms.demo_basic \
+	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
+when "abwd" then Mazes::Algorithms.demo_dist \
+	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
+when "abwt" then Mazes::Algorithms.demo_trace \
+	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
+when "abwm" then Mazes::Algorithms.demo_max \
+	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
 when "abwc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
+when "hk" then Mazes::Algorithms.demo_basic \
+	dims: dims, algo: Mazes::Algorithms::HunterKiller
+when "hkd" then Mazes::Algorithms.demo_dist \
+	dims: dims, algo: Mazes::Algorithms::HunterKiller
+when "hkt" then Mazes::Algorithms.demo_trace \
+	dims: dims, algo: Mazes::Algorithms::HunterKiller
+when "hkm" then Mazes::Algorithms.demo_max \
+	dims: dims, algo: Mazes::Algorithms::HunterKiller
+when "hkc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Algorithms::HunterKiller
 else puts dims
 end

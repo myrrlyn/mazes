@@ -3,8 +3,9 @@
 # subclasses to operate, and thus are not constrained to individual geometries.
 module Mazes::Algorithms
 	self.autoload :AldousBroder, "mazes/algorithms/aldous_broder"
-	self.autoload :Wilsons, "mazes/algorithms/wilsons"
 	self.autoload :AldousBroderWilsons, "mazes/algorithms/aldous_broder_wilsons"
+	self.autoload :HunterKiller, "mazes/algorithms/hunter_killer"
+	self.autoload :Wilsons, "mazes/algorithms/wilsons"
 
 	# Public: Demonstrate execution of an Algorithm on a Space.
 	#
