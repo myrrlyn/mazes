@@ -16,5 +16,9 @@ when "btd" then Mazes::Cartesian.demo_dist \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
 when "swd" then Mazes::Cartesian.demo_dist \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
+when "btt" then Mazes::Cartesian.demo_trace \
+	dims: dims, algo: Mazes::Cartesian::BinaryTree
+when "swt" then Mazes::Cartesian.demo_trace \
+	dims: dims, algo: Mazes::Cartesian::Sidewinder
 else puts dims
 end

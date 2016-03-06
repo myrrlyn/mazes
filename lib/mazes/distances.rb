@@ -35,5 +35,28 @@ module Mazes
 			@cells.keys
 		end
 
+# Public: Find the shortest path from a root cell to a goal.
+#
+# goal - The Cell to which the path is being sought.
+#
+# Returns a Distances class with only a single path (root -> goal) solved.
+		def path_to goal:
+			current = goal
+			trail = Distances.new root: @root
+			trail[current] = @cells[current]
+
+			until current == @root
+				current.links.each do |neighbor|
+					if @cells[neighbor] < @cells[current]
+						trail[neighbor] = @cells[neighbor]
+						current = neighbor
+						break
+					end
+				end
+			end
+
+			trail
+		end
+
 	end
 end

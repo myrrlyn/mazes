@@ -29,4 +29,14 @@ module Mazes::Cartesian
 		s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
 	end
 
+	def self.demo_trace dims:, algo:
+		s = Space.new x: dims[:x], y: dims[:y]
+		algo.act_on space: s, dir_v: :down, dir_h: :right
+		start = s[x: 0, y: dims[:y] - 1]
+		dists = start.distances
+		s.distances = dists.path_to(goal: s[x: dims[:x] - 1, y: 0])
+		puts s
+		s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
+	end
+
 end
