@@ -8,25 +8,25 @@ dims[0] = ARGV[1].nil? ? 4 : ARGV[1].to_i
 dims[1] = ARGV[2].nil? ? 4 : ARGV[2].to_i
 
 case ARGV[0]
-when "bt" then Mazes::Cartesian.demo_basic \
+when "bt" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "btd" then Mazes::Cartesian.demo_dist \
+when "btd" then Mazes::Algorithms.demo_dist \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "btt" then Mazes::Cartesian.demo_trace \
+when "btt" then Mazes::Algorithms.demo_trace \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "btm" then Mazes::Cartesian.demo_max \
+when "btm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "btc" then Mazes::Cartesian.demo_color \
+when "btc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "sw" then Mazes::Cartesian.demo_basic \
+when "sw" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
-when "swd" then Mazes::Cartesian.demo_dist \
+when "swd" then Mazes::Algorithms.demo_dist \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
-when "swt" then Mazes::Cartesian.demo_trace \
+when "swt" then Mazes::Algorithms.demo_trace \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
-when "swm" then Mazes::Cartesian.demo_max \
+when "swm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
-when "swc" then Mazes::Cartesian.demo_color \
+when "swc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "ab" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Algorithms::AldousBroder
