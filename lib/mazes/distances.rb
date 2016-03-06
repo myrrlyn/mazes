@@ -58,5 +58,20 @@ module Mazes
 			trail
 		end
 
+# Public: Find the longest single path in a Space.
+#
+# Returns a tuple (Array) containing the farthest Cell and its Integer distance.
+		def max_path
+			max_cell, max_dist = @root, 0
+
+			@cells.each do |cell, dist|
+				if dist > max_dist
+					max_cell, max_dist = cell, dist
+				end
+			end
+
+			[max_cell, max_dist]
+		end
+
 	end
 end

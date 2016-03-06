@@ -5,6 +5,8 @@ module Mazes
 # The Space is the object which gives Cells local context and on which
 # Algorithms are executed.
 	class Space
+		include DistanceMap
+		include ColorSpace
 
 # Internal: Constructs a new generic Space to contain Cells.
 #
@@ -34,8 +36,6 @@ module Mazes
 		def sample
 			raise "#{self.class} has not implemented a random sampler"
 		end
-
-		include DistanceMap
 
 # Internal: Iterate across all the Cells in a Space
 		def each_cell

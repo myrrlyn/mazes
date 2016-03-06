@@ -10,15 +10,23 @@ dims[:y] = ARGV[2].nil? ? 4 : ARGV[2].to_i
 case ARGV[0]
 when "bt" then Mazes::Cartesian.demo_basic \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "sw" then Mazes::Cartesian.demo_basic \
-	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "btd" then Mazes::Cartesian.demo_dist \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
-when "swd" then Mazes::Cartesian.demo_dist \
-	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "btt" then Mazes::Cartesian.demo_trace \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
+when "btm" then Mazes::Cartesian.demo_max \
+	dims: dims, algo: Mazes::Cartesian::BinaryTree
+when "btc" then Mazes::Cartesian.demo_color \
+	dims: dims, algo: Mazes::Cartesian::BinaryTree
+when "sw" then Mazes::Cartesian.demo_basic \
+	dims: dims, algo: Mazes::Cartesian::Sidewinder
+when "swd" then Mazes::Cartesian.demo_dist \
+	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "swt" then Mazes::Cartesian.demo_trace \
+	dims: dims, algo: Mazes::Cartesian::Sidewinder
+when "swm" then Mazes::Cartesian.demo_max \
+	dims: dims, algo: Mazes::Cartesian::Sidewinder
+when "swc" then Mazes::Cartesian.demo_color \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
 else puts dims
 end
