@@ -27,11 +27,9 @@ module Mazes
 # Public: Strip the scoping identifiers from the Algorithm name, because frankly
 # Mazes::Algorithms:: is just a waste of space.
 #
-# TODO: Figure out how to shadow to_s but still be able to use it.
-#
 # Returns a String naming the Algorithm.
-		def self.name
-			self.to_s.gsub(/.*::/, '')
+		def self.to_s
+			super.to_s.gsub(/.*::/, '')
 		end
 
 	end

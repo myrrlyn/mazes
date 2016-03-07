@@ -3,41 +3,38 @@ require "benchmark"
 module Mazes
 	class Stats
 
-		def self.run
+		def self.run tries: 200, size: [50, 50]
 			algos = [
-				Algorithms::AldousBroder,
-				Algorithms::AldousBroderWilsons,
-				Algorithms::HunterKiller,
-				Algorithms::Wilsons,
 				Cartesian::BinaryTree,
 				Cartesian::Sidewinder,
+				Algorithms::AldousBroder,
+				Algorithms::Wilsons,
+				Algorithms::AldousBroderWilsons,
+				Algorithms::HunterKiller,
+				Algorithms::RecursiveBacktracker,
 			]
-
-			tries = 200
-			size_x = 50
-			size_y = 50
 
 			averages = {}
 			algos.each do |algo|
-				puts "Running #{algo.to_s.gsub(/.*::/,'')}"
+				puts "Running #{algo}"
 				deadend_counts = []
 				time = Benchmark.measure do
 					tries.times do
-						s = Cartesian::Space.new x: size_x, y: size_y
+						s = Cartesian::Space.new x: size[0], y: size[1]
 						algo.act_on space: s
 						deadend_counts << s.deadends.count
 					end
 				end
-				puts "#{algo.name.ljust(20)} | #{time}"
+				puts "#{algo.to_s.ljust(20)} | #{time}"
 
 				total_deadends = deadend_counts.inject(0) do |s, a|
 					s + a
 				end
 				averages[algo] = total_deadends / deadend_counts.length
 			end
-			total_cells = size_x * size_y
+			total_cells = size[0] * size[1]
 			puts
-			puts "Average dead-ends per #{size_x}x#{size_y} (#{total_cells}) maze:"
+			puts "Average dead-ends per #{size[0]}x#{size[1]} (#{total_cells}) maze:"
 			puts
 			sorted_algos = algos.sort_by do |algo|
 				-averages[algo]
@@ -45,7 +42,7 @@ module Mazes
 			sorted_algos.each do |algo|
 				percentage = averages[algo] * 100.0 / total_cells
 				puts "%20s : %3d/%d (%d%%)" % [
-					algo.name,
+					algo,
 					averages[algo],
 					total_cells,
 					percentage

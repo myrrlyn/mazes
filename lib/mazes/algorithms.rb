@@ -5,6 +5,7 @@ module Mazes::Algorithms
 	self.autoload :AldousBroder, "mazes/algorithms/aldous_broder"
 	self.autoload :AldousBroderWilsons, "mazes/algorithms/aldous_broder_wilsons"
 	self.autoload :HunterKiller, "mazes/algorithms/hunter_killer"
+	self.autoload :RecursiveBacktracker, "mazes/algorithms/recursive_backtracker"
 	self.autoload :Wilsons, "mazes/algorithms/wilsons"
 
 # Public: Demonstrate execution of an Algorithm on a Space.
@@ -68,6 +69,6 @@ module Mazes::Algorithms
 		start = s[x: dims[0] / 2, y: dims[1] / 2]
 		s.distances = start.distances
 		puts "Dead ends: #{s.deadends.count}"
-		s.to_png.save "build/#{algo.name.downcase}.png"
+		s.to_png.save "build/#{algo.to_s.downcase}.png"
 	end
 end
