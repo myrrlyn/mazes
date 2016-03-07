@@ -5,6 +5,7 @@ module Mazes
 	self.autoload :Cell, "mazes/cell"
 	self.autoload :Space, "mazes/space"
 	self.autoload :Distances, "mazes/distances"
+	self.autoload :Stats, "mazes/stats"
 	self.autoload :ColorSpace, "mazes/color_space"
 	self.autoload :DistanceMap, "mazes/distance_map"
 	self.autoload :Cartesian, "mazes/cartesian"

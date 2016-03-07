@@ -44,6 +44,19 @@ module Mazes
 			raise "#{self.class} has not implemented a size reader"
 		end
 
+# Public: Get all the Cells which are deadends.
+#
+# Returns an Array of Cells, all of which have only one neighbor.
+# Raises a not-implemented exception when used on Spaces that have yet to
+# implement an iterator.
+		def deadends
+			ret = []
+			each_cell do |cell|
+				ret << cell if cell.links.count == 1
+			end
+			ret
+		end
+
 # Internal: Iterate across all the Cells in a Space
 		def each_cell
 			raise "#{self.class} has not implemented a cell iterator"

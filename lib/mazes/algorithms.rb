@@ -18,7 +18,7 @@ module Mazes::Algorithms
 			s = space.new x: dims[0], y: dims[1]
 			algo.act_on space: s
 			puts s
-			s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
+			puts "Dead ends: #{s.deadends.count}"
 		end
 
 	# Public: Demonstrate execution of an Algorithm on a Space, and add a Distance
@@ -30,7 +30,7 @@ module Mazes::Algorithms
 			dists = start.distances
 			s.distances = dists
 			puts s
-			s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
+			puts "Dead ends: #{s.deadends.count}"
 		end
 
 	# Public: Execute an Algorithm on a Space and add a single path between two
@@ -42,7 +42,7 @@ module Mazes::Algorithms
 			dists = start.distances
 			s.distances = dists.path_to(goal: s[x: dims[0] - 1, y: 0])
 			puts s
-			s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
+			puts "Dead ends: #{s.deadends.count}"
 		end
 
 	# Public: Execute an Algorithm on a Space and then look for the longest path in
@@ -57,7 +57,7 @@ module Mazes::Algorithms
 			goal, distance = new_dists.max_path
 			s.distances = new_dists.path_to goal: goal
 			puts s
-			s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
+			puts "Dead ends: #{s.deadends.count}"
 		end
 
 		def self.demo_color dims:, algo:, space: Mazes::Cartesian::Space
@@ -65,6 +65,7 @@ module Mazes::Algorithms
 			algo.act_on space: s
 			start = s[x: dims[0] / 2, y: dims[1] / 2]
 			s.distances = start.distances
+			puts "Dead ends: #{s.deadends.count}"
 			s.to_png.save "build/#{algo.to_s.gsub(/.*::/, '').downcase}.png"
 		end
 end

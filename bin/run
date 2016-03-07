@@ -68,5 +68,6 @@ when "hkm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::HunterKiller
 when "hkc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::HunterKiller
+when "stats" then Mazes::Stats.run
 else puts dims
 end
