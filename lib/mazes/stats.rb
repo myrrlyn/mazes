@@ -28,7 +28,7 @@ module Mazes
 						deadend_counts << s.deadends.count
 					end
 				end
-				puts "#{algo.to_s.gsub(/.*::/,'').ljust(20)} | #{time}"
+				puts "#{algo.name.ljust(20)} | #{time}"
 
 				total_deadends = deadend_counts.inject(0) do |s, a|
 					s + a
@@ -45,7 +45,7 @@ module Mazes
 			sorted_algos.each do |algo|
 				percentage = averages[algo] * 100.0 / total_cells
 				puts "%20s : %3d/%d (%d%%)" % [
-					algo.to_s.gsub(/.*::/,''),
+					algo.name,
 					averages[algo],
 					total_cells,
 					percentage

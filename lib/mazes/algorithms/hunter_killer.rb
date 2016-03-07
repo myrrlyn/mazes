@@ -1,8 +1,12 @@
 module Mazes::Algorithms
-	class HunterKiller
+# Public: Hunter-Killer generator algorthm. Breadth-first search starting from a
+# random position and growing outwards until collision, then selecting an
+# untouched Cell on the frontier and running again.
+	class HunterKiller < Mazes::Algorithm
 
-		def self.act_on space:
-			current = space.sample
+# Public: Execute the Hunter-Killer algorithm.
+		def self.act_on space:, origin: space.sample
+			current = origin
 
 			while current
 				unvisited_neighbors = current.neighbors.select do |n|

@@ -1,5 +1,7 @@
 module Mazes::Cartesian
 # Public: Sidewinder generation algorithm in 2-Dimensional Cartesian space.
+# Like BinaryTree, this is an iterative algorithm rather than a random-walk.
+# As such it is fast but has unpleasant biases and artifacts.
 	class Sidewinder < Mazes::Algorithm
 
 # Public: Execute the Sidewinder algoirthm on a 2-Dimensional Cartesian Space.
@@ -17,8 +19,11 @@ module Mazes::Cartesian
 # behavior, its primary axis (horizonta or vertical), and the directions in
 # which it acts.
 #
+# Sidewinder doesn't use the origin parameter.
+#
 # Returns the modified Space.
-		def self.act_on space:, dir_h: :right, dir_v: :up, dir_main: :h, rnd: 2
+		def self.act_on space:, origin: space.sample, \
+			dir_h: :right, dir_v: :up, dir_main: :h, rnd: 2
 			if dir_main == :h
 				iter = :each_row
 			elsif dir_main == :v
