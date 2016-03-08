@@ -137,9 +137,11 @@ module Mazes::Cartesian
 #
 # cell_size - An Integer dictating the size of a Cell in pixels.
 #   Defaults to 10.
+# scalar - A Number that affects the bg_color_for algorithm. See ColorSpace for
+#   details.
 #
 # Returns a PNG representation of the Space.
-		def to_png cell_size: 10
+		def to_png cell_size: 10, scalar: 1.25
 			img_w = cell_size * @x
 			img_h = cell_size * @y
 			img_bg = ChunkyPNG::Color::TRANSPARENT
@@ -155,7 +157,7 @@ module Mazes::Cartesian
 					x1, y1 = (cell.x + 1) * cell_size, (cell.y + 1) * cell_size
 
 					if mode == :bg
-						color = bg_color_for cell: cell
+						color = bg_color_for cell: cell, scalar: scalar
 						img.rect(x0, y0, x1, y1, color, color) if color
 					else
 						img.line(x0, y0, x1, y0, img_fg) unless cell.up

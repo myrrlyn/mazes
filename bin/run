@@ -19,6 +19,8 @@ when "btm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
 when "btc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Cartesian::BinaryTree
+when "btmc" then Mazes::Algorithms.demo_max_color \
+	dims: dims, algo: Mazes::Cartesian::BinaryTree
 when "sw" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "swd" then Mazes::Algorithms.demo_dist \
@@ -28,6 +30,8 @@ when "swt" then Mazes::Algorithms.demo_trace \
 when "swm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "swc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Cartesian::Sidewinder
+when "swmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Cartesian::Sidewinder
 when "ab" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Algorithms::AldousBroder
@@ -39,6 +43,8 @@ when "abm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::AldousBroder
 when "abc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::AldousBroder
+when "abmc" then Mazes::Algorithms.demo_max_color \
+	dims: dims, algo: Mazes::Algorithms::AldousBroder
 when "w" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
 when "wd" then Mazes::Algorithms.demo_dist \
@@ -48,6 +54,8 @@ when "wt" then Mazes::Algorithms.demo_trace \
 when "wm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
 when "wc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Algorithms::Wilsons
+when "wmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Algorithms::Wilsons
 when "abw" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
@@ -59,6 +67,8 @@ when "abwm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
 when "abwc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
+when "abwmc" then Mazes::Algorithms.demo_max_color \
+	dims: dims, algo: Mazes::Algorithms::AldousBroderWilsons
 when "hk" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Algorithms::HunterKiller
 when "hkd" then Mazes::Algorithms.demo_dist \
@@ -69,6 +79,8 @@ when "hkm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::HunterKiller
 when "hkc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::HunterKiller
+when "hkmc" then Mazes::Algorithms.demo_max_color \
+	dims: dims, algo: Mazes::Algorithms::HunterKiller
 when "rb" then Mazes::Algorithms.demo_basic \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "rbd" then Mazes::Algorithms.demo_dist \
@@ -78,6 +90,8 @@ when "rbt" then Mazes::Algorithms.demo_trace \
 when "rbm" then Mazes::Algorithms.demo_max \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "rbc" then Mazes::Algorithms.demo_color \
+	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
+when "rbmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "stats" then Mazes::Stats.run size: dims, tries: count
 else puts dims

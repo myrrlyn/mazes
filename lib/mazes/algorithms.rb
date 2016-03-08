@@ -51,11 +51,11 @@ module Mazes::Algorithms
 	def self.demo_max dims: [16, 16], algo:, space: Mazes::Cartesian::Space
 		s = space.new x: dims[0], y: dims[1]
 		algo.act_on space: s
-		start = s[x:0, y:0]
+		start = s[x: 0, y: 0]
 		dists = start.distances
-		new_start, distance = dists.max_path
+		new_start, distance = dists.farthest
 		new_dists = new_start.distances
-		goal, distance = new_dists.max_path
+		goal, distance = new_dists.farthest
 		s.distances = new_dists.path_to goal: goal
 		puts s
 		puts "Dead ends: #{s.deadends.count}"
@@ -66,9 +66,26 @@ module Mazes::Algorithms
 	def self.demo_color dims: [100, 100], algo:, space: Mazes::Cartesian::Space
 		s = space.new x: dims[0], y: dims[1]
 		algo.act_on space: s
-		start = s[x: dims[0] / 2, y: dims[1] / 2]
+		#start = s[x: dims[0] / 2, y: dims[1] / 2]
+		start = s[x: 0, y: 0]
 		s.distances = start.distances
 		puts "Dead ends: #{s.deadends.count}"
-		s.to_png.save "build/#{algo.to_s.downcase}.png"
+		s.to_png(cell_size: 8, scalar: 4).save "build/#{algo.to_s.downcase}.png"
+	end
+
+	def self.demo_max_color dims: [100, 100], algo:, \
+		space: Mazes::Cartesian::Space
+		s = space.new x: dims[0], y: dims[1]
+		algo.act_on space: s
+		start = s[x: 0, y: 0]
+		dists = start.distances
+		new_start, distance = dists.farthest
+		new_dists = new_start.distances
+		goal, distance = new_dists.farthest
+		s.distances = new_dists.path_to goal: goal
+		puts "Algorithm: #{algo}"
+		puts "Dead ends: #{s.deadends.count}"
+		puts "Max Path length: #{distance}"
+		s.to_png(cell_size: 8, scalar: 4).save "build/#{algo.to_s.downcase}.png"
 	end
 end

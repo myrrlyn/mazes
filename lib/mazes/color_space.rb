@@ -11,7 +11,7 @@ module Mazes
 # distances - A Distances instance.
 		def distances= distances
 			@distances = distances
-			@farthest, @maximum = @distances.max_path
+			@farthest, @maximum = distances.farthest
 		end
 
 # Public: Retreive a background color for a Cell to be used in rendering.
@@ -19,10 +19,11 @@ module Mazes
 # cell - A Cell to query for background coloring.
 # algo - A Symbol referencing a specific coloring algorithm to use. Defaults to
 #   :rotate_hue
+# scalar - A Number that alters the chosen algorithm's behavior
 #
 # Returns a ChunkyPNG::Color or nil
-		def bg_color_for cell:, algo: :rotate_hue
-			self.send(algo, cell: cell)
+		def bg_color_for cell:, algo: :rotate_hue, scalar: 1.25
+			self.send(algo, cell: cell, scalar: scalar)
 		end
 
 # Public: Calculate background colors by rotating hues along the color wheel as
@@ -33,7 +34,6 @@ module Mazes
 #   the longest path of the Space. Defaults to 1.25
 #
 # Returns a ChunkyPNG::Color or nil
-require "pry"
 		def rotate_hue cell:, scalar: 1.25
 			return nil if @distances.nil? or @distances[cell].nil?
 			distance = @distances[cell]

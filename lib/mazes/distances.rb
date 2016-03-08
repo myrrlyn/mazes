@@ -39,7 +39,7 @@ module Mazes
 #
 # goal - The Cell to which the path is being sought.
 #
-# Returns a Distances class with only a single path (root -> goal) solved.
+# Returns a Distances instance with only a single path (root -> goal) solved.
 		def path_to goal:
 			current = goal
 			trail = Distances.new root: @root
@@ -58,10 +58,10 @@ module Mazes
 			trail
 		end
 
-# Public: Find the longest single path in a Space.
+# Public: Find the farthest Cell from the root Cell in a given Space.
 #
 # Returns a tuple (Array) containing the farthest Cell and its Integer distance.
-		def max_path
+		def farthest
 			max_cell, max_dist = @root, 0
 
 			@cells.each do |cell, dist|
@@ -71,6 +71,16 @@ module Mazes
 			end
 
 			[max_cell, max_dist]
+		end
+
+# Public: Find the longest single path between any two Cells in a Space.
+#
+# Returns a Distances instance with only the longest path solved.
+		def max_path
+			max_cell, max_dist = farthest
+			new_dists = max_cell.distances
+			max_cell, max_dist = new_dists.farthest
+			new_dists.path_to goal: max_cell
 		end
 
 	end
