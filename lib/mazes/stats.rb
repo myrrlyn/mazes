@@ -65,6 +65,7 @@ module Mazes
 #
 # trials - Integer count of trials per Algorithm.
 # max_size - Integer maximum of Space dimensions.
+# verbose - A Boolean controlling status updates to stdout.
 #
 # NOTE: This is a COMPREHENSIVE data gathering routine. It will run the given
 # number of trials for all possible Space sizes inside the max_size parameter.
@@ -87,9 +88,9 @@ module Mazes
 # TODO: Allow the possibility of recording each generated maze to a text and/or
 # image rendering, because why not.
 #
-# Writes results to a file, build/statistics.csv
+# Writes results to files, build/#{algorithm}.csv
 # Returns nil
-		def self.report trials: 100, max_size: 100
+		def self.report trials: 100, max_size: 100, verbose: true
 			algos = [
 				Cartesian::BinaryTree,
 				Cartesian::Sidewinder,
@@ -100,27 +101,20 @@ module Mazes
 				Algorithms::RecursiveBacktracker,
 			]
 			jm = max_size.to_s.length
-			File.open "build/statistics.csv", "w", 0644 do |f|
-				h = <<-EOS
-Statistical analysis of #{trials} repetition(s) of each generator Algorithm on
-Spaces with maximum value of #{max_size} in each dimension.
-		EOS
-				f << h.gsub(/\n/, ' ') << "\n"
-				f << "algo,x,y,"
-				f << "utime.mean,utime.stddev,utime.min,utime.max,"
-				f << "cutime.mean,cutime.stddev,cutime.min,cutime.max,"
-				f << "stime.mean,stime.stddev,stime.min,stime.max,"
-				f << "cstime.mean,cstime.stddev,cstime.min,cstime.max,"
-				f << "real.mean,real.stddev,real.min,real.max,"
-				f << "total.mean,total.stddev,total.min,total.max,"
-				f << "deads.mean,deads.stddev,deads.min,deads.max,"
-				f << "dists.mean,dists.stddev,dists.min,dists.max,"
-				algos.each do |a|
+			algos.each do |a|
+				File.open "build/#{a}.csv", "w", 0644 do |f|
+					f << "x,y,"
+					f << "utime.mean,utime.stddev,utime.min,utime.max,"
+					f << "cutime.mean,cutime.stddev,cutime.min,cutime.max,"
+					f << "stime.mean,stime.stddev,stime.min,stime.max,"
+					f << "cstime.mean,cstime.stddev,cstime.min,cstime.max,"
+					f << "real.mean,real.stddev,real.min,real.max,"
+					f << "total.mean,total.stddev,total.min,total.max,"
+					f << "deads.mean,deads.stddev,deads.min,deads.max,"
+					f << "dists.mean,dists.stddev,dists.min,dists.max,"
+					f << "\n"
 					(1..max_size).each do |msx|
 						(1..msx).each do |msy|
-							puts <<-EOS
-#{a.to_s} #{msx.to_s.rjust(jm, "0")} #{msy.to_s.rjust(jm, "0")}
-							EOS
 							times, deads, dists = [], [], []
 							trials.times do |t|
 								s = Cartesian::Space.new x: msx, y: msy
@@ -137,8 +131,13 @@ Spaces with maximum value of #{max_size} in each dimension.
 								]
 								deads << s.deadends.count
 								dists << s[x: 0, y: 0].distances.max_path.farthest[1]
+								if verbose
+									puts <<-EOS
+#{a.to_s} #{msx.to_s.rjust(jm, "0")} #{msy.to_s.rjust(jm, "0")} \
+#{t.to_s.rjust(2, "0")} #{bm.real}
+									EOS
+								end
 							end
-							f << "#{a.to_s},"
 							f << "#{msx.to_s.rjust(jm, "0")},"
 							f << "#{msy.to_s.rjust(jm, "0")},"
 							6.times do |tt|
