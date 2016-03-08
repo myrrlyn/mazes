@@ -13,7 +13,7 @@ module Mazes::Algorithms
 			unvisited.delete cell
 
 # Run Aldous-Broder for the first half
-			while unvisited.length > space.size / 2
+			while unvisited.size > space.size / 2
 				neighbor = cell.neighbors.sample
 				if neighbor.links.empty?
 					cell.link cell: neighbor

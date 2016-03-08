@@ -93,6 +93,20 @@ when "rbc" then Mazes::Algorithms.demo_color \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "rbmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
+when "test" then
+	m = Mazes::Cartesian::Mask.new x: 10, y: 10
+	2.times do |x|
+		2.times do |y|
+			m[x, y] = false
+			m[5 - x, 5 - y] = false
+			m[9 - x, y] = false
+			m[x, 9 - y] = false
+			m[9 - x, 9 - y] = false
+		end
+	end
+	s = Mazes::Cartesian::MaskSpace.new mask: m
+	Mazes::Algorithms::RecursiveBacktracker.act_on space: s
+	puts s
 when "stats" then Mazes::Stats.run size: dims, tries: count
 when "report" then Mazes::Stats.report
 else puts dims

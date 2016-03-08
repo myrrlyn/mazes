@@ -21,7 +21,7 @@ module Mazes::Cartesian
 # y - An Integer coordinate in the Y dimension.
 #
 # Returns the Cell at the target coordinates, or nil if one is not present.
-		def [] x:, y:
+		def [] x, y
 			return nil unless x.between? 0, @y - 1
 			return nil unless y.between? 0, @y - 1
 			@space[x][y]
@@ -31,8 +31,7 @@ module Mazes::Cartesian
 #
 # Returns a randomly-selected Cell.
 		def sample
-			x, y = rand(@x), rand(@y)
-			self[x: x, y: y]
+			self[rand(@x), rand(@y)]
 		end
 
 # Public: Get the size of the Space.
@@ -63,7 +62,7 @@ module Mazes::Cartesian
 			@y.times do |row|
 				y = []
 				@x.times do |col|
-					y << self[x: col, y: row]
+					y << self[col, row]
 				end
 				yield y
 			end
@@ -93,10 +92,10 @@ module Mazes::Cartesian
 		def init_cells
 			each_cell do |c|
 				col, row = c.x, c.y
-				c.up    = self[x: col, y: row - 1]
-				c.down  = self[x: col, y: row + 1]
-				c.left  = self[x: col - 1, y: row]
-				c.right = self[x: col + 1, y: row]
+				c.up    = self[col, row - 1]
+				c.down  = self[col, row + 1]
+				c.left  = self[col - 1, row]
+				c.right = self[col + 1, row]
 			end
 		end
 
@@ -108,7 +107,7 @@ module Mazes::Cartesian
 		def to_s
 			# Instead of doing annoying math to swap the last junction for a corner,
 			# just backspace and print a corner.
-			ret =  "\u2554#{("\u2550" * 3 + "\u2566") * @x}\C-h\u2557\n"
+			ret =  "\u2554#{("\u2550" * 3 + "\u2566") * @x}\b\u2557\n"
 			s_width = 4 * (@x + 1)
 
 			each_row do |row|
@@ -123,7 +122,7 @@ module Mazes::Cartesian
 					bot << bound_d << "\u256C"
 				end
 				ret << mid << "\n"
-				ret << bot << "\C-h\u2563\n"
+				ret << bot << "\b\u2563\n"
 			end
 			ret = ret[0, ret.length - s_width]
 			ret << "\u255A#{("\u2550" * 3 + "\u2569") * @x}\u0008\u255D\n"

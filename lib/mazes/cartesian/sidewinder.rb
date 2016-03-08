@@ -32,6 +32,7 @@ module Mazes::Cartesian
 			space.send(iter) do |group|
 				run = []
 				group.each do |cell|
+					next if cell.nil?
 					run << cell
 					at_bound_h = cell.send(dir_h).nil?
 					at_bound_v = cell.send(dir_v).nil?

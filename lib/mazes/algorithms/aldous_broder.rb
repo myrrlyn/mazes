@@ -9,14 +9,18 @@ module Mazes::Algorithms
 
 # Public: Executes the Aldous-Broder algorithm on a Space.
 		def self.act_on space:, origin: space.sample
+			unvisited = []
+			space.each_cell do |cell|
+				unvisited << cell
+			end
 			cell = origin
-			unvisited = space.size - 1
+			unvisited.delete cell
 
-			while unvisited > 0
+			while unvisited.size > 0
 				neighbor = cell.neighbors.sample
 				if neighbor.links.empty?
 					cell.link cell: neighbor
-					unvisited -= 1
+					unvisited.delete neighbor
 				end
 
 				cell = neighbor

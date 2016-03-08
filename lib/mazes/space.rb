@@ -28,6 +28,7 @@ module Mazes
 #
 # Raises a not-implemented exception.
 		def [] dim
+			raise "#{self.class} has not implemented a lookup reader"
 		end
 
 # Internal: Get a Cell at random.
@@ -37,11 +38,15 @@ module Mazes
 			raise "#{self.class} has not implemented a random sampler"
 		end
 
-# Internal: Get the size of the Space.
+# Public: Get the size of the Space.
 #
-# Raises a not-implemented exception.
+# Returns the count of all Cells present in the Space.
 		def size
-			raise "#{self.class} has not implemented a size reader"
+			count = 0
+			each_cell do |c|
+				count += 1 if !!c
+			end
+			count
 		end
 
 # Public: Get all the Cells which are deadends.
