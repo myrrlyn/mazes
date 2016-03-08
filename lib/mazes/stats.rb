@@ -65,7 +65,7 @@ module Mazes
 #
 # trials - Integer count of trials per Algorithm.
 # max_size - Integer maximum of Space dimensions.
-# verbose - A Boolean controlling status updates to stdout.
+# verbose - An Integer in (0..5) that controls stdout logging.
 #
 # NOTE: This is a COMPREHENSIVE data gathering routine. It will run the given
 # number of trials for all possible Space sizes inside the max_size parameter.
@@ -90,7 +90,7 @@ module Mazes
 #
 # Writes results to files, build/#{algorithm}.csv
 # Returns nil
-		def self.report trials: 100, max_size: 100, verbose: true
+		def self.report trials: 100, max_size: 100, verbose: 0
 			algos = [
 				Cartesian::BinaryTree,
 				Cartesian::Sidewinder,
@@ -101,7 +101,10 @@ module Mazes
 				Algorithms::RecursiveBacktracker,
 			]
 			jm = max_size.to_s.length
+			log = []
 			algos.each do |a|
+				log[0] = "#{a}" if verbose > 0
+				puts log.join(" ") if verbose == 1
 				File.open "build/#{a}.csv", "w", 0644 do |f|
 					f << "x,y,"
 					f << "utime.mean,utime.stddev,utime.min,utime.max,"
@@ -114,13 +117,21 @@ module Mazes
 					f << "dists.mean,dists.stddev,dists.min,dists.max,"
 					f << "\n"
 					(1..max_size).each do |msx|
+						log[1] = "#{msx.to_s.rjust(jm, "0")}" if verbose > 1
+						puts log.join(" ") if verbose == 2
 						(1..msx).each do |msy|
+							log[2] = "#{msy.to_s.rjust(jm, "0")}" if verbose > 2
+							puts log.join(" ") if verbose == 3
 							times, deads, dists = [], [], []
 							trials.times do |t|
+								log[3] = "#{t.to_s.rjust(2, "0")}" if verbose > 3
+								puts log.join(" ") if verbose == 4
 								s = Cartesian::Space.new x: msx, y: msy
 								bm = Benchmark.measure do
 									a.act_on space: s
 								end
+								log[4] = bm.real.to_s if verbose > 4
+								puts log.join(" ") if verbose > 4
 								times << [
 									bm.utime,
 									bm.cutime,
@@ -130,13 +141,7 @@ module Mazes
 									bm.total,
 								]
 								deads << s.deadends.count
-								dists << s[x: 0, y: 0].distances.max_path.farthest[1]
-								if verbose
-									puts <<-EOS
-#{a.to_s} #{msx.to_s.rjust(jm, "0")} #{msy.to_s.rjust(jm, "0")} \
-#{t.to_s.rjust(2, "0")} #{bm.real}
-									EOS
-								end
+								dists << s[0, 0].distances.max_path.farthest[1]
 							end
 							f << "#{msx.to_s.rjust(jm, "0")},"
 							f << "#{msy.to_s.rjust(jm, "0")},"

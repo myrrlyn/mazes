@@ -7,6 +7,7 @@ dims = Hash.new
 dims[0] = ARGV[1].nil? ? 4 : ARGV[1].to_i
 dims[1] = ARGV[2].nil? ? 4 : ARGV[2].to_i
 count = ARGV[-1].nil? ? 100 : ARGV[-1].to_i
+verbosity = ARGV[-1].nil? ? 5 : ARGV[-1].to_i
 
 case ARGV[0]
 when "bt" then Mazes::Algorithms.demo_basic \
@@ -94,20 +95,34 @@ when "rbc" then Mazes::Algorithms.demo_color \
 when "rbmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "test" then
-	m = Mazes::Cartesian::Mask.new x: 10, y: 10
+	m = Mazes::Cartesian::Mask.new x: 8, y: 8
 	2.times do |x|
 		2.times do |y|
+			# m[4 - x, 4 - y] = false
 			m[x, y] = false
-			m[5 - x, 5 - y] = false
-			m[9 - x, y] = false
-			m[x, 9 - y] = false
-			m[9 - x, 9 - y] = false
+			m[7 - x, y] = false
+			m[x, 7 - y] = false
+			m[7 - x, 7 - y] = false
 		end
 	end
-	s = Mazes::Cartesian::MaskSpace.new mask: m
-	Mazes::Algorithms::RecursiveBacktracker.act_on space: s
-	puts s
+	algos = [
+		Mazes::Cartesian::BinaryTree,
+		Mazes::Cartesian::Sidewinder,
+		Mazes::Algorithms::AldousBroder,
+		Mazes::Algorithms::Wilsons,
+		Mazes::Algorithms::AldousBroderWilsons,
+		Mazes::Algorithms::HunterKiller,
+		Mazes::Algorithms::RecursiveBacktracker,
+	]
+	algos.each do |a|
+		s = Mazes::Cartesian::MaskSpace.new mask: m
+		str = s.to_s
+		while s.to_s == str
+			a.act_on space: s, origin: s[2, 2]
+		end
+		puts s
+	end
 when "stats" then Mazes::Stats.run size: dims, tries: count
-when "report" then Mazes::Stats.report
+when "report" then Mazes::Stats.report verbose: verbosity
 else puts dims
 end
