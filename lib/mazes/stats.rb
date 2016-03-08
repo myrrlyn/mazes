@@ -1,8 +1,13 @@
 require "benchmark"
+require "descriptive_statistics"
 
 module Mazes
 	class Stats
 
+# Public: Do timing, dead-end, and path-length analysis on the Algorithms.
+#
+# tries - Integer count of trials per Algorithm
+# size  - Integer Array of Space dimensions
 		def self.run tries: 100, size: [50, 50]
 			algos = [
 				Cartesian::BinaryTree,
@@ -54,5 +59,106 @@ module Mazes
 				]
 			end
 		end
+
+# Public: Collect data for a series of dimensions and emit it to a file suitable
+# for further processing. Currently, this emits in column-labeled CSV.
+#
+# trials - Integer count of trials per Algorithm.
+# max_size - Integer maximum of Space dimensions.
+#
+# NOTE: This is a COMPREHENSIVE data gathering routine. It will run the given
+# number of trials for all possible Space sizes inside the max_size parameter.
+# Currently, only Cartesian space is implemented, and so to reduce duplication
+# of effort equivalent Spaces will not be generated (i.e. it assumes [5, 4] has
+# the same characteristics as [4, 5]). This means that at default values of 100
+# trials and max size, 100 iterations of [1,1], [2, 1], [2, 2], ... [100, 99],
+# [100, 100] will be performed for EACH ALGORITHM. THIS WILL TAKE A VERY LONG
+# TIME AND CONSUME A LOT OF POWER.
+#
+# DO NOT DO THIS FOR LARGE VALUES OF TRIALS OR MAX_SIZE EXCEPT ON A MACHINE THAT
+# HAS THE RESOURCES TO DO IT. THIS IS DEFINITELY AN OVERNIGHT OR WEEKEND TASK.
+#
+# TODO: Allow clients to control the gathered Algorithms, measurements, and
+# statistics. This should probably be done on a combinational basis, e.g.,
+# disabling stat.min mutes .min statistics for all measurements, disabling real
+# ignores the realtime measurement, disabling a specific Algorithm removes it
+# from the main loop.
+#
+# TODO: Allow the possibility of recording each generated maze to a text and/or
+# image rendering, because why not.
+#
+# Writes results to a file, build/statistics.csv
+# Returns nil
+		def self.report trials: 100, max_size: 100
+			algos = [
+				Cartesian::BinaryTree,
+				Cartesian::Sidewinder,
+				Algorithms::AldousBroder,
+				Algorithms::Wilsons,
+				Algorithms::AldousBroderWilsons,
+				Algorithms::HunterKiller,
+				Algorithms::RecursiveBacktracker,
+			]
+			jm = max_size.to_s.length
+			File.open "build/statistics.csv", "w", 0644 do |f|
+				h = <<-EOS
+Statistical analysis of #{trials} repetition(s) of each generator Algorithm on
+Spaces with maximum value of #{max_size} in each dimension.
+		EOS
+				f << h.gsub(/\n/, ' ') << "\n"
+				f << "algo,x,y,"
+				f << "utime.mean,utime.stddev,utime.min,utime.max,"
+				f << "cutime.mean,cutime.stddev,cutime.min,cutime.max,"
+				f << "stime.mean,stime.stddev,stime.min,stime.max,"
+				f << "cstime.mean,cstime.stddev,cstime.min,cstime.max,"
+				f << "real.mean,real.stddev,real.min,real.max,"
+				f << "total.mean,total.stddev,total.min,total.max,"
+				f << "deads.mean,deads.stddev,deads.min,deads.max,"
+				f << "dists.mean,dists.stddev,dists.min,dists.max,"
+				algos.each do |a|
+					(1..max_size).each do |msx|
+						(1..msx).each do |msy|
+							puts <<-EOS
+#{a.to_s} #{msx.to_s.rjust(jm, "0")} #{msy.to_s.rjust(jm, "0")}
+							EOS
+							times, deads, dists = [], [], []
+							trials.times do |t|
+								s = Cartesian::Space.new x: msx, y: msy
+								bm = Benchmark.measure do
+									a.act_on space: s
+								end
+								times << [
+									bm.utime,
+									bm.cutime,
+									bm.stime,
+									bm.cstime,
+									bm.real,
+									bm.total,
+								]
+								deads << s.deadends.count
+								dists << s[x: 0, y: 0].distances.max_path.farthest[1]
+							end
+							f << "#{a.to_s},"
+							f << "#{msx.to_s.rjust(jm, "0")},"
+							f << "#{msy.to_s.rjust(jm, "0")},"
+							6.times do |tt|
+								r = []
+								times.each do |time|
+									r << time[tt]
+								end
+								f << "#{r.mean},#{r.standard_deviation},#{r.min},#{r.max},"
+							end
+							f << "#{deads.mean},#{deads.standard_deviation},"
+							f << "#{deads.min},#{deads.max},"
+							f << "#{dists.mean},#{dists.standard_deviation},"
+							f << "#{dists.min},#{dists.max},"
+							f << "\n"
+						end
+					end
+					f << "\n"
+				end
+			end
+		end
+
 	end
 end

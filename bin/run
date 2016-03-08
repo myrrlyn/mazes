@@ -94,5 +94,6 @@ when "rbc" then Mazes::Algorithms.demo_color \
 when "rbmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "stats" then Mazes::Stats.run size: dims, tries: count
+when "report" then Mazes::Stats.report
 else puts dims
 end
