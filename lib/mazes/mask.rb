@@ -15,6 +15,16 @@ module Mazes
 			raise "#{self.class} has not implemented a constructor"
 		end
 
+# Internal: Constructs a new generic Mask using a text-file input.
+#
+# file - A filename or File containing plaintext.
+#
+# Raises a not-implemented exception.
+		def from_txt file:
+			@mask = []
+			raise "#{self.class} has not implemented a text-file constructor"
+		end
+
 # Internal: Access a specific Cell's mask.
 #
 # dim - An n-dimensional Integer Array of coordinates at which to retreive a

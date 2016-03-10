@@ -15,6 +15,34 @@ module Mazes::Cartesian
 			end
 		end
 
+# Public: Construct a new Mask using a text file as the reference.
+#
+# file - A filename String or File reference from which to read.
+#
+# Returns a new Mask constructed according to the reference file.
+		def self.from_txt file:
+			if file.is_a? String
+				filedata = File.readlines file
+			elsif file.is_a? File
+				filedata = file.readlines
+			end
+			filedata.map do |line|
+				line.strip!
+			end
+			filedata.pop while filedata.last.length < 1
+			mask = Mask.new x: filedata.first.length, y: filedata.length
+			mask.x.times do |col|
+				mask.y.times do |row|
+					if filedata[row][col] == "X"
+						mask[col, row] = false
+					else
+						mask[col, row] = true
+					end
+				end
+			end
+			mask
+		end
+
 # Public: Access a Cell state at a specific address.
 #
 # x - An Integer coordinate for the X dimension.
