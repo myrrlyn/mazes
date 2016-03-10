@@ -157,9 +157,9 @@ module Mazes
 							f << "#{dists.mean},#{dists.standard_deviation},"
 							f << "#{dists.min},#{dists.max},"
 							f << "\n"
+							f.flush if msy % 10 == 0
 						end
 					end
-					f << "\n"
 				end
 			end
 		end
