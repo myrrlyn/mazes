@@ -95,32 +95,23 @@ when "rbc" then Mazes::Algorithms.demo_color \
 when "rbmc" then Mazes::Algorithms.demo_max_color \
 	dims: dims, algo: Mazes::Algorithms::RecursiveBacktracker
 when "test" then
-	m = Mazes::Cartesian::Mask.new x: 8, y: 8
-	2.times do |x|
-		2.times do |y|
-			# m[4 - x, 4 - y] = false
-			m[x, y] = false
-			m[7 - x, y] = false
-			m[x, 7 - y] = false
-			m[7 - x, 7 - y] = false
-		end
-	end
+	m = Mazes::Cartesian::Mask.from_img file: "build/mask.png"
 	algos = [
-		Mazes::Cartesian::BinaryTree,
-		Mazes::Cartesian::Sidewinder,
-		Mazes::Algorithms::AldousBroder,
-		Mazes::Algorithms::Wilsons,
-		Mazes::Algorithms::AldousBroderWilsons,
-		Mazes::Algorithms::HunterKiller,
+		# Mazes::Cartesian::BinaryTree,
+		# Mazes::Cartesian::Sidewinder,
+		# Mazes::Algorithms::AldousBroder,
+		# Mazes::Algorithms::Wilsons,
+		# Mazes::Algorithms::AldousBroderWilsons,
+		# Mazes::Algorithms::HunterKiller,
 		Mazes::Algorithms::RecursiveBacktracker,
 	]
 	algos.each do |a|
 		s = Mazes::Cartesian::MaskSpace.new mask: m
 		str = s.to_s
 		while s.to_s == str
-			a.act_on space: s, origin: s[2, 2]
+			a.act_on space: s
 		end
-		puts s
+		s.to_png.save "build/masked_maze.png"
 	end
 when "stats" then Mazes::Stats.run size: dims, tries: count
 when "report" then Mazes::Stats.report verbose: verbosity

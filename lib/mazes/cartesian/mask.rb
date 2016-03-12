@@ -1,3 +1,5 @@
+require "chunky_png"
+
 module Mazes::Cartesian
 	class Mask < Mazes::Mask
 		attr_reader :x, :y
@@ -41,6 +43,17 @@ module Mazes::Cartesian
 				end
 			end
 			mask
+		end
+
+# Public: Construct a new mask using an image file as the reference.
+#
+# file - A filename String or File reference from which to read.
+#
+# Returns a new Mask constructed according to the reference file.
+		def self.from_img file:
+			if file.is_a? String and file[-4 .. -1] == ".png"
+				read_png file
+			end
 		end
 
 # Public: Access a Cell state at a specific address.
@@ -104,6 +117,31 @@ module Mazes::Cartesian
 					yield m
 				end
 			end
+		end
+
+		private
+
+# Internal: Handle construction from PNG images. This is called by Mask.from_img
+# when it detects PNG input, and handles all PNG-specific construction work.
+#
+# file - A filename String for a PNG image.
+#
+# Returns a Mask that respects the image.
+		def self.read_png file
+			img = ChunkyPNG::Image.from_file file
+			mask = Mask.new x: img.width, y: img.height
+
+			mask.x.times do |col|
+				mask.y.times do |row|
+					if img[col, row] == ChunkyPNG::Color::BLACK
+						mask[col, row] = false
+					else
+						mask[col, row] = true
+					end
+				end
+			end
+
+			mask
 		end
 
 	end
